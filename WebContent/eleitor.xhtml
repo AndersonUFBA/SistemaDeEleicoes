@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="pageTitle">Eleitor</ui:define>
+	<ui:define name="pageHeader">Cadastro de Eleitores</ui:define>
+	<ui:define name="body">
+		<h:form id="edicao">
+			<h:messages />
+			<h:inputHidden value="#{eleitorBean.eleitorSelecionado.id}" />
+			
+			<h:panelGrid columns="1">
+				<h:outputLabel value="Nome:" />
+				<h:inputText id="nomeEleitor" value="#{eleitorBean.eleitorSelecionado.nome}"  required="true"/>
+
+				<h:outputLabel value="CPF:" />
+				<h:inputText value="#{eleitorBean.eleitorSelecionado.cpf}" >
+				<f:validator validatorId="cpf"/>
+				</h:inputText>
+				
+
+				<h:outputLabel value="Endereço:" />
+				<h:inputText value="#{eleitorBean.eleitorSelecionado.endereco}" />
+				
+				<h:outputLabel value="Senha:" />
+				<h:inputText value="#{eleitorBean.eleitorSelecionado.senha}" />
+
+
+
+			</h:panelGrid>
+
+			<h:commandButton value="Salvar" action="#{eleitorBean.salvar}" />
+			<h:commandButton value="Novo Eleitor" action="#{eleitorBean.novo}" />
+
+		</h:form>
+
+		<h:form id="lista">
+			<h:dataTable value="#{eleitorBean.lista}" var="eleitor" border="1"  rendered="#{not empty eleitorBean.lista}">
+			<f:facet name="header">Listagem de Eleitors</f:facet>
+			
+			<h:column>
+			<f:facet name="header">Nome</f:facet>
+			#{eleitor.nome}
+			</h:column>
+			
+			<h:column>
+			<f:facet name="header">CPF</f:facet>
+			#{eleitor.cpf}
+			</h:column>
+			
+			<h:column>
+			<f:facet name="header">Senha</f:facet>
+			#{eleitor.senha}
+			</h:column>
+			
+			
+			<h:column>
+			<f:facet name="header">Votou?</f:facet>
+			#{eleitor.votou}
+			</h:column>
+			
+			<h:column>
+			<f:facet name="header">Ações</f:facet>
+				<h:commandLink  action="#{eleitorBean.excluir}"  onclick="if (!confirm('Deseja realmente excluir o eleitor #{eleitor.nome}?')) return false;">
+				<h:graphicImage library="imagens"  name="remove-icon.png"/>
+				<f:setPropertyActionListener target="#{eleitorBean.eleitorSelecionado}" value="#{eleitor}" />
+				</h:commandLink>
+				<h:commandLink>
+				<h:graphicImage library="imagens"  name="wrench-icon.png"/>
+				<f:setPropertyActionListener target="#{eleitorBean.eleitorSelecionado}" value="#{eleitor}" />
+				</h:commandLink>
+				
+			</h:column>
+			
+			
+			
+			
+			</h:dataTable>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

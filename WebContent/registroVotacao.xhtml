@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<!-- 
+		Replace path to template, title, header and body
+		with actual data.
+	 -->
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="pageTitle">Votacaos</ui:define>
+	<ui:define name="pageHeader">Registro de Votações</ui:define>
+	<ui:define name="body">
+		<h:form id="idBuscaChapa">
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Eleitor:" />
+				<h:selectOneMenu value="#{registroVotacaos.eleitorSelecionado}">
+				<f:selectItem itemLabel="Selecione um eleitor:"/>
+					<f:selectItems value="#{registroVotacaos.eleitorSelect}" />
+					<f:ajax event="change"  render="idEleitorSelecionado"/>
+					
+				</h:selectOneMenu>
+				
+				<h:outputLabel value="Número da Chapa:" />
+				<h:panelGroup>
+					<h:inputText value="#{registroVotacaos.chapaSelecionado.numero}" />
+						<h:commandButton value="Confirmar" action="#{registroVotacaos.buscarChapa}" >
+						</h:commandButton>
+				</h:panelGroup>
+	
+				<h:outputLabel value="Id do Eleitor: " />
+				<h:outputText id="idEleitorSelecionado" value="#{registroVotacaos.eleitorSelecionado.id}" />
+						
+				<h:dataTable value="#{registroVotacaos.urna}" rendered="#{not empty registroVotacaos.urna}" var="chapa" border="1">
+
+
+					<f:facet name="header">Confirmação do voto</f:facet>
+					
+					<h:column>
+						<f:facet name="header">Descriçao</f:facet>
+						#{chapa.nome}
+					</h:column>
+					<h:column>
+						<f:facet name="header">Descriçao</f:facet>
+						#{chapa.numero}
+					</h:column>
+			
+				<h:column>
+			<f:facet name="header">Ações</f:facet>
+				<h:commandLink  action="#{registroVotacaos.excluirChapaUrna}"  onclick="if (!confirm('Deseja realmente excluir o chapa #{chapa.numero} do carrinho?')) return false;">
+				<h:graphicImage library="imagens"  name="remove-icon.png"/>
+				<f:setPropertyActionListener target="#{registroVotacaos.chapaSelecionado}" value="#{chapa}" />
+				</h:commandLink>
+			</h:column>
+
+				</h:dataTable>
+				
+				<h:commandButton value="Finalizar Votacao" action="#{registroVotacaos.finalizarVotacao}" />		
+						
+			</h:panelGrid>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

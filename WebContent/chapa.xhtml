@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<ui:composition template="/templates/template.xhtml">
+	<ui:define name="pageTitle">Chapa</ui:define>
+	<ui:define name="pageHeader">Cadastro de Chapas</ui:define>
+	<ui:define name="body">
+		<h:form id="edicao">
+			<h:messages />
+			<h:inputHidden value="#{chapaBean.chapaSelecionado.id}" />
+			
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Nome:" />
+				<h:inputText value="#{chapaBean.chapaSelecionado.nome}" />
+				
+				<h:outputLabel value="Numero:" />
+				<h:inputText id="numeroChapa" value="#{chapaBean.chapaSelecionado.numero}"  required="true"/>				
+				
+			</h:panelGrid>
+
+			<h:commandButton value="Salvar" action="#{chapaBean.salvar}" />
+			<h:commandButton value="Novo Chapa" action="#{chapaBean.novo}" />
+
+		</h:form>
+
+		<h:form id="lista">
+			<h:dataTable value="#{chapaBean.lista}" var="chapa" border="1"  rendered="#{not empty chapaBean.lista}">
+			<f:facet name="header">Listagem de Chapas</f:facet>
+			
+			<h:column>
+			<f:facet name="header">Nome</f:facet>
+			#{chapa.nome}
+			</h:column>
+			
+			<h:column>
+			<f:facet name="header">Numero</f:facet>
+			#{chapa.numero}
+			</h:column>
+			
+			
+			<h:column>
+			<f:facet name="header">Número de votos</f:facet>
+			#{chapa.numeroDeVotos}
+			</h:column>
+				
+			<h:column>
+			<f:facet name="header">Ações</f:facet>
+				<h:commandLink  action="#{chapaBean.excluir}"  onclick="if (!confirm('Deseja realmente excluir o chapa #{chapa.numero}?')) return false;">
+				<h:graphicImage library="imagens"  name="remove-icon.png"/>
+				<f:setPropertyActionListener target="#{chapaBean.chapaSelecionado}" value="#{chapa}" />
+				</h:commandLink>
+				<h:commandLink>
+				<h:graphicImage library="imagens"  name="wrench-icon.png"/>
+				<f:setPropertyActionListener target="#{chapaBean.chapaSelecionado}" value="#{chapa}" />
+				</h:commandLink>
+				
+			</h:column>
+			
+			</h:dataTable>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

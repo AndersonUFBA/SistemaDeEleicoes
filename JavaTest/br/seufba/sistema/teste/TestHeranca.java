@@ -1,4 +1,4 @@
-package br.seufba.sistema.test;
+package br.seufba.sistema.teste;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;

@@ -1,5 +1,5 @@
 # SistemaDeEleicoes
-Sistema de EleiÃ§Ã£o da UFBA (SEUFBA)
+Sistema de Eleição da UFBA (SEUFBA)
 Para que o sistema funcione você deverá ter em seu computador:
 
 1- Eclipse com pespectiva Java EE;

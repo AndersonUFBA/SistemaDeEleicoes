@@ -1,4 +1,4 @@
-package com.kurtphpr.sistema.test;
+package br.seufba.sistema.test;
 
 import static org.junit.Assert.assertEquals;
 

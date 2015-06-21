@@ -1,4 +1,4 @@
-package com.kurtphpr.sistema.test;
+package br.seufba.sistema.test;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
